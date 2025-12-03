@@ -1,0 +1,11 @@
+{
+  "applinks": {
+      "apps": [],
+      "details": [
+      {
+        "appID": "jp.ac.chuo.app.machinaka",
+        "paths": ["*"]
+      }
+    ]
+  }
+}

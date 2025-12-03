@@ -4,6 +4,7 @@ import { getAuth, signOut } from "firebase/auth";
 import Layout from "../../components/layout";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { openDeepLink } from "../../lib/openApp";
 
 export default function Home() {
   const { currentUser } = useAuth();
@@ -18,23 +19,23 @@ export default function Home() {
     setIsAndroid(/android/i.test(navigator.userAgent));
   }, []);
 
-  const handleOpenApp = () => {
-    if (isAndroid) {
-      // アプリがインストールされていない場合のフォールバックも考慮すると良い
-      window.location.href = "helpapp://map";
-
-      // フォールバックの例 (タイムアウトを利用)
-      setTimeout(() => {
-        // もしアプリが開かなかったら（ページが遷移しなかったら）ストアに飛ばすなど
-        // この方法は確実ではないため、UXを考慮して実装する
-        if (!document.hidden) {
-          // document.hiddenでアプリ遷移を検知できる場合がある
-          // window.location.href = "https://play.google.com/store/apps/details?id=com.example.app";
-          console.log("アプリが開かなかったか、インストールされていません。");
-        }
-      }, 2500);
-    } else {
+  const handleOpenApp = async () => {
+    if (!isAndroid) {
       setIsStatus("no-android");
+      return;
+    }
+
+    const deepLink = "helpapp://map";
+    const result = await openDeepLink(deepLink, {
+      androidPackage: "jp.ac.chuo.app.machinaka",
+      androidFallbackUrl:
+        "https://play.google.com/store/apps/details?id=jp.ac.chuo.app.machinaka",
+      timeout: 2500,
+    });
+
+    if (result === "fallback") {
+      // アプリが起動しなかった（インストールされていない等）
+      setIsStatus("not-installed");
     }
   };
 
@@ -68,6 +69,10 @@ export default function Home() {
             {isStatus === "no-android" ? (
               <p className="text-red-500 mt-2">
                 Android端末でのみアプリを開くことができます。
+              </p>
+            ) : isStatus === "not-installed" ? (
+              <p className="text-red-500 mt-2">
+                アプリがインストールされていないか、起動に失敗しました。ストアからインストールしてください。
               </p>
             ) : (
               <button

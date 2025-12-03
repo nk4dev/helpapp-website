@@ -10,8 +10,7 @@
 }
 
 .header:hover a {
-    color: #aaa;
-    transition: all 0.3s;
+    cursor: pointer;
 }
 
 .apptitle {
@@ -38,7 +37,6 @@
 
 .linkscontainer a {
     color: #000;
-
 }
 
 .linkscontainer a:hover {

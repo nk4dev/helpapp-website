@@ -4,18 +4,27 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npx prisma generate && npx prisma migrate dev && npx prisma db push && npx next build",
     "start": "next start"
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^7.0.1",
+    "@prisma/client": "^7.0.1",
+    "@types/pg": "^8.15.6",
+    "dotenv": "^17.2.3",
     "firebase": "^11.1.0",
     "firebase-admin": "^13.0.2",
-    "next": "^15.0.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "mapbox-gl": "^3.3.0",
+    "next": "^16.0.4",
+    "pg": "^8.16.3",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-map-gl": "^8.1.0",
+    "tsx": "^4.21.0"
   },
   "devDependencies": {
     "@types/react": "19.1.4",
-    "typescript": "5.8.3"
+    "typescript": "5.8.3",
+    "prisma": "^7.0.1"
   }
 }
