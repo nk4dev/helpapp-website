@@ -4,11 +4,8 @@ import { getAuth, signOut } from "firebase/auth";
 import Layout from "../../components/layout";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-<<<<<<< Updated upstream
 import { openDeepLink } from "../../lib/openApp";
-=======
 import Image from "next/image";
->>>>>>> Stashed changes
 
 export default function Home() {
   const { currentUser } = useAuth();
@@ -16,11 +13,17 @@ export default function Home() {
 
   const auth = getAuth();
 
+  const [isStatus, setIsStatus] = useState<"no-android" | "not-installed" | null>(null);
+  const [isAndroid, setIsAndroid] = useState(false);
+
   useEffect(() => {
     // クライアントサイドでのみnavigatorオブジェクトにアクセス
+    if (typeof navigator !== "undefined") {
+      const ua = navigator.userAgent || "";
+      setIsAndroid(/Android/i.test(ua));
+    }
   }, []);
 
-<<<<<<< Updated upstream
   const handleOpenApp = async () => {
     if (!isAndroid) {
       setIsStatus("no-android");
@@ -41,8 +44,6 @@ export default function Home() {
     }
   };
 
-=======
->>>>>>> Stashed changes
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -62,41 +63,35 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-      <Image src={currentUser.photoURL} alt="HelpApp Logo" width={200} height={200} />
+        <Image src={currentUser.photoURL || ""} alt="HelpApp Logo" width={200} height={200} />
         {currentUser && (
-          <div>
-<<<<<<< Updated upstream
-            <h2>{currentUser.displayName} さん、こんにちは！</h2>
-            <p>
-              {" "}
-              <span>{currentUser.email}</span> でログイン中
-            </p>
-
-            {isStatus === "no-android" ? (
-              <p className="text-red-500 mt-2">
-                Android端末でのみアプリを開くことができます。
-              </p>
-            ) : isStatus === "not-installed" ? (
-              <p className="text-red-500 mt-2">
-                アプリがインストールされていないか、起動に失敗しました。ストアからインストールしてください。
-              </p>
-            ) : (
-              <button
-                onClick={handleOpenApp}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              >
-=======
-            こんにちは
-            <h2>{currentUser.displayName}</h2>
-            <h2>さん</h2>
+          <>
             <div>
-              <button onClick={() => router.push("/helpapp://")}>
->>>>>>> Stashed changes
-                アプリを開く
-              </button>
+              <h2>{currentUser.displayName} さん、こんにちは！</h2>
+              <p>
+                {" "}
+                <span>{currentUser.email}</span> でログイン中
+              </p>
+
+              {isStatus === "no-android" ? (
+                <p className="text-red-500 mt-2">
+                  Android端末でのみアプリを開くことができます。
+                </p>
+              ) : isStatus === "not-installed" ? (
+                <p className="text-red-500 mt-2">
+                  アプリがインストールされていないか、起動に失敗しました。ストアからインストールしてください。
+                </p>
+              ) : (
+                <button
+                  onClick={handleOpenApp}
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                >
+                  アプリを開く
+                </button>
+              )}
             </div>
             <button onClick={handleSignOut}>ログアウト</button>
-          </div>
+          </>
         )}
       </main>
     </div>

@@ -11,10 +11,6 @@ yarn.lock
 *.log
 .env
 .env.*
-<<<<<<< Updated upstream
 .vercel
 
 prisma-generated
-=======
-certificates
->>>>>>> Stashed changes

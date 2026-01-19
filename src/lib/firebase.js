@@ -1,10 +1,5 @@
-<<<<<<< Updated upstream
 import { getApps, initializeApp, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-=======
-import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
->>>>>>> Stashed changes
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -15,7 +10,6 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-<<<<<<< Updated upstream
 // Basic validation to help surface missing or empty env vars early
 const requiredKeys = [
     'NEXT_PUBLIC_FIREBASE_API_KEY',
@@ -42,9 +36,3 @@ if (!getApps().length) {
 const firebaseApp = getApp();
 export const auth = getAuth(firebaseApp);
 export default firebaseApp;
-=======
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-
-export const auth = getAuth(app);
-export default app;
->>>>>>> Stashed changes

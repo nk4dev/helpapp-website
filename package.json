@@ -1,9 +1,11 @@
 {
   "name": "nextjs-api-geomaps",
-  "version": "0.1.0",
-  "license": "MIT",
+  "version": "0.2.0",
   "scripts": {
     "dev": "next dev",
+    "db:generate": "npx prisma generate",
+    "db:migrate": "npx prisma migrate dev",
+    "db:push": "npx prisma db push",
     "build": "npx prisma generate && npx prisma migrate dev && npx prisma db push && npx next build",
     "start": "next start"
   },
