@@ -4,21 +4,23 @@ import { getAuth, signOut } from "firebase/auth";
 import Layout from "../../components/layout";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+<<<<<<< Updated upstream
 import { openDeepLink } from "../../lib/openApp";
+=======
+import Image from "next/image";
+>>>>>>> Stashed changes
 
 export default function Home() {
   const { currentUser } = useAuth();
   const router = useRouter();
 
   const auth = getAuth();
-  const [isStatus, setIsStatus] = useState("");
-  const [isAndroid, setIsAndroid] = useState(false);
 
   useEffect(() => {
     // クライアントサイドでのみnavigatorオブジェクトにアクセス
-    setIsAndroid(/android/i.test(navigator.userAgent));
   }, []);
 
+<<<<<<< Updated upstream
   const handleOpenApp = async () => {
     if (!isAndroid) {
       setIsStatus("no-android");
@@ -39,6 +41,8 @@ export default function Home() {
     }
   };
 
+=======
+>>>>>>> Stashed changes
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -58,8 +62,10 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
+      <Image src={currentUser.photoURL} alt="HelpApp Logo" width={200} height={200} />
         {currentUser && (
           <div>
+<<<<<<< Updated upstream
             <h2>{currentUser.displayName} さん、こんにちは！</h2>
             <p>
               {" "}
@@ -79,9 +85,16 @@ export default function Home() {
                 onClick={handleOpenApp}
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               >
+=======
+            こんにちは
+            <h2>{currentUser.displayName}</h2>
+            <h2>さん</h2>
+            <div>
+              <button onClick={() => router.push("/helpapp://")}>
+>>>>>>> Stashed changes
                 アプリを開く
               </button>
-            )}
+            </div>
             <button onClick={handleSignOut}>ログアウト</button>
           </div>
         )}

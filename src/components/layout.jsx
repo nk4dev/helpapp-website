@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import Link from "next/link";
 import styles from "../styles/index.module.css";
 import { useEffect, useState } from "react";
@@ -87,6 +88,46 @@ function Layout({ children }) {
       </footer>
     </div>
   );
+=======
+import React, { useEffect, useState } from 'react';
+import styles from '../styles/index.module.css';
+
+function Layout({ children }) {
+    const [version, setVersion] = useState(null);
+
+    useEffect(() => {
+        let mounted = true;
+
+        fetch('/api/version')
+            .then((res) => res.json())
+            .then((data) => {
+                if (mounted) setVersion(data?.version ?? null);
+            })
+            .catch(() => {
+                if (mounted) setVersion(null);
+            });
+
+        return () => {
+            mounted = false;
+        };
+    }, []);
+
+    return (
+        <div className={styles.global_conteiner}>
+            <header className={styles.header}>
+                <div className={styles.apptitle}>
+                    <>ヘルプアプリ</>
+                </div>
+                <a href="/">ホーム</a>
+            </header>
+            {children}
+            <footer className={styles.footer}>
+                <p>サイトマップ</p>
+                {version ? <p>{version}</p> : <p>Loading...</p>}
+            </footer>
+        </div>
+    );
+>>>>>>> Stashed changes
 }
 
 export default Layout;
